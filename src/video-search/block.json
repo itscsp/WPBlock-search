@@ -5,11 +5,25 @@
 	"version": "0.1.0",
 	"title": "Video Search",
 	"category": "widgets",
-	"icon": "smiley",
-	"description": "Example block scaffolded with Create Block tool.",
+	"icon": "search",
+	"description": "A search block that shows results in a modal popup",
 	"example": {},
 	"supports": {
 		"html": false
+	},
+	"attributes": {
+		"searchPlaceholder": {
+			"type": "string",
+			"default": "Search posts and pages..."
+		},
+		"searchButtonText": {
+			"type": "string",
+			"default": "Search"
+		},
+		"postTypes": {
+			"type": "array",
+			"default": ["post", "page"]
+		}
 	},
 	"textdomain": "video-search",
 	"editorScript": "file:./index.js",

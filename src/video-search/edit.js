@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -29,10 +29,61 @@ import './editor.scss';
  *
  * @return {Element} Element to render.
  */
-export default function Edit() {
+export default function Edit({ attributes, setAttributes }) {
+	const { searchPlaceholder, searchButtonText, postTypes } = attributes;
+	const blockProps = useBlockProps();
+
 	return (
-		<p { ...useBlockProps() }>
-			{ __( 'Video Search – hello from the editor!', 'video-search' ) }
-		</p>
+		<>
+			<InspectorControls>
+				<PanelBody title={__('Search Settings', 'video-search')}>
+					<TextControl
+						label={__('Search Placeholder', 'video-search')}
+						value={searchPlaceholder}
+						onChange={(value) => setAttributes({ searchPlaceholder: value })}
+					/>
+					<TextControl
+						label={__('Search Button Text', 'video-search')}
+						value={searchButtonText}
+						onChange={(value) => setAttributes({ searchButtonText: value })}
+					/>
+					<div className="post-types-control">
+						<p>{__('Search in:', 'video-search')}</p>
+						<CheckboxControl
+							label={__('Posts', 'video-search')}
+							checked={postTypes.includes('post')}
+							onChange={(checked) => {
+								const newPostTypes = checked
+									? [...postTypes, 'post']
+									: postTypes.filter(type => type !== 'post');
+								setAttributes({ postTypes: newPostTypes });
+							}}
+						/>
+						<CheckboxControl
+							label={__('Pages', 'video-search')}
+							checked={postTypes.includes('page')}
+							onChange={(checked) => {
+								const newPostTypes = checked
+									? [...postTypes, 'page']
+									: postTypes.filter(type => type !== 'page');
+								setAttributes({ postTypes: newPostTypes });
+							}}
+						/>
+					</div>
+				</PanelBody>
+			</InspectorControls>
+			<div {...blockProps}>
+				<div className="video-search-container">
+					<input
+						type="text"
+						placeholder={searchPlaceholder}
+						className="video-search-input"
+					/>
+					<button className="video-search-button">
+						{searchButtonText}
+					</button>
+				</div>
+			</div>
+		</>
 	);
 }

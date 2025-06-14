@@ -8,13 +8,30 @@ return array(
 		'version' => '0.1.0',
 		'title' => 'Video Search',
 		'category' => 'widgets',
-		'icon' => 'smiley',
-		'description' => 'Example block scaffolded with Create Block tool.',
+		'icon' => 'search',
+		'description' => 'A search block that shows results in a modal popup',
 		'example' => array(
 			
 		),
 		'supports' => array(
 			'html' => false
+		),
+		'attributes' => array(
+			'searchPlaceholder' => array(
+				'type' => 'string',
+				'default' => 'Search posts and pages...'
+			),
+			'searchButtonText' => array(
+				'type' => 'string',
+				'default' => 'Search'
+			),
+			'postTypes' => array(
+				'type' => 'array',
+				'default' => array(
+					'post',
+					'page'
+				)
+			)
 		),
 		'textdomain' => 'video-search',
 		'editorScript' => 'file:./index.js',
