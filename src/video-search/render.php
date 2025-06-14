@@ -15,7 +15,6 @@ $wrapper_attributes = get_block_wrapper_attributes([
 <div <?php echo $wrapper_attributes; ?>>
     <div class="video-search-container">
         <div class="search-input-wrapper">
-            <span class="dashicons dashicons-<?php echo esc_attr($attributes['searchIcon']); ?>"></span>
             <input 
                 type="text" 
                 class="video-search-input" 
@@ -28,10 +27,10 @@ $wrapper_attributes = get_block_wrapper_attributes([
     </div>
     <div class="video-search-modal" style="display: none;">
         <div class="video-search-modal-content">
-            <span class="video-search-modal-close">&times;</span>
+
             <div class="modal-search-container">
+            <span class="video-search-modal-close">&times;</span>
                 <div class="search-input-wrapper">
-                    <span class="dashicons dashicons-<?php echo esc_attr($attributes['searchIcon']); ?>"></span>
                     <input 
                         type="text" 
                         class="modal-search-input" 
