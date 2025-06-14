@@ -25,12 +25,20 @@ return array(
 				'type' => 'string',
 				'default' => 'Search'
 			),
+			'clearButtonText' => array(
+				'type' => 'string',
+				'default' => 'Clear'
+			),
 			'postTypes' => array(
 				'type' => 'array',
 				'default' => array(
 					'post',
 					'page'
 				)
+			),
+			'searchIcon' => array(
+				'type' => 'string',
+				'default' => 'search'
 			)
 		),
 		'textdomain' => 'video-search',

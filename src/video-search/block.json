@@ -20,9 +20,17 @@
 			"type": "string",
 			"default": "Search"
 		},
+		"clearButtonText": {
+			"type": "string",
+			"default": "Clear"
+		},
 		"postTypes": {
 			"type": "array",
 			"default": ["post", "page"]
+		},
+		"searchIcon": {
+			"type": "string",
+			"default": "search"
 		}
 	},
 	"textdomain": "video-search",

@@ -9,3 +9,47 @@
 .wp-block-create-block-video-search {
   border: 1px dotted #f00;
 }
+.wp-block-create-block-video-search .video-search-container {
+  display: flex;
+  gap: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+.wp-block-create-block-video-search .video-search-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+.wp-block-create-block-video-search .video-search-input:focus {
+  outline: none;
+  border-color: #007cba;
+}
+.wp-block-create-block-video-search .video-search-button {
+  padding: 10px 20px;
+  background-color: #007cba;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+.wp-block-create-block-video-search .video-search-button:hover {
+  background-color: #006ba1;
+}
+
+.post-types-control {
+  margin-top: 15px;
+}
+.post-types-control p {
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.post-types-control .components-checkbox-control {
+  margin-bottom: 8px;
+}
