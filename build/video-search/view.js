@@ -34,29 +34,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchInput = block.querySelector('.video-search-input');
     const searchButton = block.querySelector('.video-search-button');
     const modal = block.querySelector('.video-search-modal');
+    const modalInput = block.querySelector('.modal-search-input');
+    const modalButton = block.querySelector('.modal-search-button');
     const closeButton = block.querySelector('.video-search-modal-close');
     const resultsContainer = block.querySelector('.video-search-results');
     const postTypes = JSON.parse(block.dataset.postTypes || '["post", "page"]');
+    const searchText = block.dataset.searchText || 'Search';
 
     // Function to perform search
     const performSearch = async searchTerm => {
       try {
-        const response = await fetch('/wp-json/wp/v2/search', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          params: {
-            search: searchTerm,
-            type: postTypes.join(','),
-            per_page: 10
-          }
-        });
-        if (!response.ok) {
+        resultsContainer.innerHTML = '<p>Searching...</p>';
+
+        // Get posts directly using the posts endpoint
+        const postsResponse = await fetch(`/wp-json/wp/v2/posts?search=${encodeURIComponent(searchTerm)}&per_page=10&_embed`);
+        if (!postsResponse.ok) {
           throw new Error('Search failed');
         }
-        const results = await response.json();
-        displayResults(results);
+        const posts = await postsResponse.json();
+        if (posts.length === 0) {
+          resultsContainer.innerHTML = '<p>No results found.</p>';
+          return;
+        }
+        displayResults(posts);
       } catch (error) {
         console.error('Search error:', error);
         resultsContainer.innerHTML = '<p>Error performing search. Please try again.</p>';
@@ -64,34 +64,65 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     // Function to display results
-    const displayResults = results => {
-      if (results.length === 0) {
+    const displayResults = posts => {
+      if (posts.length === 0) {
         resultsContainer.innerHTML = '<p>No results found.</p>';
         return;
       }
-      const resultsHTML = results.map(result => `
+      const resultsHTML = posts.map(post => `
                 <div class="search-result-item">
-                    <h3><a href="${result.url}">${result.title}</a></h3>
-                    <p>${result.subtype}</p>
+                    <h3><a href="${post.link}">${post.title.rendered}</a></h3>
+                    <div class="search-result-content">
+                        ${post.excerpt.rendered}
+                    </div>
+                    <div class="search-result-meta">
+                        <span class="post-type">${post.type}</span>
+                        <span class="post-date">${new Date(post.date).toLocaleDateString()}</span>
+                    </div>
                 </div>
             `).join('');
       resultsContainer.innerHTML = resultsHTML;
     };
 
-    // Event Listeners
-    const handleSearch = () => {
-      const searchTerm = searchInput.value.trim();
+    // Function to handle search
+    const handleSearch = input => {
+      const searchTerm = input.value.trim();
       if (searchTerm) {
         performSearch(searchTerm);
-        modal.style.display = 'block';
       }
     };
-    searchButton.addEventListener('click', handleSearch);
-    searchInput.addEventListener('keypress', e => {
-      if (e.key === 'Enter') {
-        handleSearch();
+
+    // Event Listeners for main search
+    searchButton.addEventListener('click', () => {
+      handleSearch(searchInput);
+      if (searchInput.value.trim()) {
+        modal.style.display = 'block';
+        modalInput.value = searchInput.value;
       }
     });
+    searchInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleSearch(searchInput);
+        if (searchInput.value.trim()) {
+          modal.style.display = 'block';
+          modalInput.value = searchInput.value;
+        }
+      }
+    });
+
+    // Event Listeners for modal search
+    modalButton.addEventListener('click', () => {
+      handleSearch(modalInput);
+    });
+    modalInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleSearch(modalInput);
+      }
+    });
+
+    // Close modal
     closeButton.addEventListener('click', () => {
       modal.style.display = 'none';
     });

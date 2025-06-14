@@ -7,17 +7,21 @@
 
 $wrapper_attributes = get_block_wrapper_attributes([
     'class' => 'video-search-block',
-    'data-post-types' => esc_attr(json_encode($attributes['postTypes']))
+    'data-post-types' => esc_attr(json_encode($attributes['postTypes'])),
+    'data-search-text' => esc_attr($attributes['searchButtonText'])
 ]);
 ?>
 
 <div <?php echo $wrapper_attributes; ?>>
     <div class="video-search-container">
-        <input 
-            type="text" 
-            class="video-search-input" 
-            placeholder="<?php echo esc_attr($attributes['searchPlaceholder']); ?>"
-        />
+        <div class="search-input-wrapper">
+            <span class="dashicons dashicons-<?php echo esc_attr($attributes['searchIcon']); ?>"></span>
+            <input 
+                type="text" 
+                class="video-search-input" 
+                placeholder="<?php echo esc_attr($attributes['searchPlaceholder']); ?>"
+            />
+        </div>
         <button class="video-search-button">
             <?php echo esc_html($attributes['searchButtonText']); ?>
         </button>
@@ -25,6 +29,19 @@ $wrapper_attributes = get_block_wrapper_attributes([
     <div class="video-search-modal" style="display: none;">
         <div class="video-search-modal-content">
             <span class="video-search-modal-close">&times;</span>
+            <div class="modal-search-container">
+                <div class="search-input-wrapper">
+                    <span class="dashicons dashicons-<?php echo esc_attr($attributes['searchIcon']); ?>"></span>
+                    <input 
+                        type="text" 
+                        class="modal-search-input" 
+                        placeholder="<?php echo esc_attr($attributes['searchPlaceholder']); ?>"
+                    />
+                </div>
+                <button class="modal-search-button">
+                    <?php echo esc_html($attributes['searchButtonText']); ?>
+                </button>
+            </div>
             <div class="video-search-results"></div>
         </div>
     </div>

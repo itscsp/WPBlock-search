@@ -25,10 +25,6 @@ return array(
 				'type' => 'string',
 				'default' => 'Search'
 			),
-			'clearButtonText' => array(
-				'type' => 'string',
-				'default' => 'Clear'
-			),
 			'postTypes' => array(
 				'type' => 'array',
 				'default' => array(

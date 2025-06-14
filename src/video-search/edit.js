@@ -21,7 +21,14 @@ import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
  */
 import './editor.scss';
 
-import { PanelBody, TextControl, CheckboxControl } from '@wordpress/components';
+import { PanelBody, TextControl, CheckboxControl, SelectControl } from '@wordpress/components';
+
+const ICON_OPTIONS = [
+	{ label: 'Search', value: 'search' },
+	{ label: 'Magnifying Glass', value: 'magnifying-glass' },
+	{ label: 'Zoom In', value: 'zoom-in' },
+	{ label: 'Filter', value: 'filter' },
+];
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -32,13 +39,19 @@ import { PanelBody, TextControl, CheckboxControl } from '@wordpress/components';
  * @return {Element} Element to render.
  */
 export default function Edit({ attributes, setAttributes }) {
-	const { searchPlaceholder, searchButtonText, postTypes } = attributes;
+	const { searchPlaceholder, searchButtonText, postTypes, searchIcon } = attributes;
 	const blockProps = useBlockProps();
 
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody title={__('Search Settings', 'video-search')}>
+					<SelectControl
+						label={__('Search Icon', 'video-search')}
+						value={searchIcon}
+						options={ICON_OPTIONS}
+						onChange={(value) => setAttributes({ searchIcon: value })}
+					/>
 					<TextControl
 						label={__('Search Placeholder', 'video-search')}
 						value={searchPlaceholder}
@@ -76,11 +89,14 @@ export default function Edit({ attributes, setAttributes }) {
 			</InspectorControls>
 			<div {...blockProps}>
 				<div className="video-search-container">
-					<input
-						type="text"
-						placeholder={searchPlaceholder}
-						className="video-search-input"
-					/>
+					<div className="search-input-wrapper">
+						<span className={`dashicons dashicons-${searchIcon}`}></span>
+						<input
+							type="text"
+							placeholder={searchPlaceholder}
+							className="video-search-input"
+						/>
+					</div>
 					<button className="video-search-button">
 						{searchButtonText}
 					</button>

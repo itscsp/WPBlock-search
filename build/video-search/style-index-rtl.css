@@ -18,18 +18,32 @@
   max-width: 600px;
   margin: 0 auto;
 }
-.wp-block-create-block-video-search .video-search-input {
+.wp-block-create-block-video-search .search-input-wrapper {
   flex: 1;
-  padding: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.wp-block-create-block-video-search .search-input-wrapper .dashicons {
+  position: absolute;
+  right: 10px;
+  color: #666;
+}
+.wp-block-create-block-video-search .video-search-input,
+.wp-block-create-block-video-search .modal-search-input {
+  flex: 1;
+  padding: 10px 35px 10px 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
 }
-.wp-block-create-block-video-search .video-search-input:focus {
+.wp-block-create-block-video-search .video-search-input:focus,
+.wp-block-create-block-video-search .modal-search-input:focus {
   outline: none;
   border-color: #007cba;
 }
-.wp-block-create-block-video-search .video-search-button {
+.wp-block-create-block-video-search .video-search-button,
+.wp-block-create-block-video-search .modal-search-button {
   padding: 10px 20px;
   background-color: #007cba;
   color: white;
@@ -39,7 +53,8 @@
   font-size: 16px;
   transition: background-color 0.3s;
 }
-.wp-block-create-block-video-search .video-search-button:hover {
+.wp-block-create-block-video-search .video-search-button:hover,
+.wp-block-create-block-video-search .modal-search-button:hover {
   background-color: #006ba1;
 }
 .wp-block-create-block-video-search .video-search-modal {
@@ -55,13 +70,24 @@
 .wp-block-create-block-video-search .video-search-modal-content {
   position: relative;
   background-color: #fff;
-  margin: 10% auto;
+  margin: 5% auto;
   padding: 20px;
-  width: 80%;
+  width: 90%;
   max-width: 800px;
   border-radius: 8px;
-  max-height: 80vh;
+  max-height: 90vh;
   overflow-y: auto;
+}
+.wp-block-create-block-video-search .modal-search-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 1;
 }
 .wp-block-create-block-video-search .video-search-modal-close {
   position: absolute;
@@ -71,19 +97,25 @@
   font-weight: bold;
   cursor: pointer;
   color: #666;
+  z-index: 2;
 }
 .wp-block-create-block-video-search .video-search-modal-close:hover {
   color: #000;
 }
 .wp-block-create-block-video-search .search-result-item {
-  padding: 15px;
+  padding: 20px;
   border-bottom: 1px solid #eee;
+  transition: background-color 0.3s;
+}
+.wp-block-create-block-video-search .search-result-item:hover {
+  background-color: #f8f9fa;
 }
 .wp-block-create-block-video-search .search-result-item:last-child {
   border-bottom: none;
 }
 .wp-block-create-block-video-search .search-result-item h3 {
-  margin: 0 0 5px 0;
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
 }
 .wp-block-create-block-video-search .search-result-item h3 a {
   color: #007cba;
@@ -92,8 +124,38 @@
 .wp-block-create-block-video-search .search-result-item h3 a:hover {
   text-decoration: underline;
 }
-.wp-block-create-block-video-search .search-result-item p {
-  margin: 0;
+.wp-block-create-block-video-search .search-result-item .search-result-content {
+  margin-bottom: 10px;
+  color: #444;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+.wp-block-create-block-video-search .search-result-item .search-result-content p {
+  margin: 0 0 10px 0;
+}
+.wp-block-create-block-video-search .search-result-item .search-result-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 0.85em;
   color: #666;
-  font-size: 14px;
+}
+.wp-block-create-block-video-search .search-result-item .search-result-meta .post-type {
+  text-transform: capitalize;
+  background: #e9ecef;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+.wp-block-create-block-video-search .search-result-item .search-result-meta .post-date {
+  color: #666;
+}
+.wp-block-create-block-video-search .searching {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+.wp-block-create-block-video-search .no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  font-style: italic;
 }

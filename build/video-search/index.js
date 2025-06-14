@@ -8,7 +8,7 @@
   \*************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/video-search","version":"0.1.0","title":"Video Search","category":"widgets","icon":"search","description":"A search block that shows results in a modal popup","example":{},"supports":{"html":false},"attributes":{"searchPlaceholder":{"type":"string","default":"Search posts and pages..."},"searchButtonText":{"type":"string","default":"Search"},"clearButtonText":{"type":"string","default":"Clear"},"postTypes":{"type":"array","default":["post","page"]},"searchIcon":{"type":"string","default":"search"}},"textdomain":"video-search","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/video-search","version":"0.1.0","title":"Video Search","category":"widgets","icon":"search","description":"A search block that shows results in a modal popup","example":{},"supports":{"html":false},"attributes":{"searchPlaceholder":{"type":"string","default":"Search posts and pages..."},"searchButtonText":{"type":"string","default":"Search"},"postTypes":{"type":"array","default":["post","page"]},"searchIcon":{"type":"string","default":"search"}},"textdomain":"video-search","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
 
 /***/ }),
 
@@ -55,6 +55,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const ICON_OPTIONS = [{
+  label: 'Search',
+  value: 'search'
+}, {
+  label: 'Magnifying Glass',
+  value: 'magnifying-glass'
+}, {
+  label: 'Zoom In',
+  value: 'zoom-in'
+}, {
+  label: 'Filter',
+  value: 'filter'
+}];
+
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -63,7 +77,6 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @return {Element} Element to render.
  */
-
 function Edit({
   attributes,
   setAttributes
@@ -71,14 +84,22 @@ function Edit({
   const {
     searchPlaceholder,
     searchButtonText,
-    postTypes
+    postTypes,
+    searchIcon
   } = attributes;
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
         title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Search Settings', 'video-search'),
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Search Icon', 'video-search'),
+          value: searchIcon,
+          options: ICON_OPTIONS,
+          onChange: value => setAttributes({
+            searchIcon: value
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Search Placeholder', 'video-search'),
           value: searchPlaceholder,
           onChange: value => setAttributes({
@@ -119,10 +140,15 @@ function Edit({
       ...blockProps,
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
         className: "video-search-container",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
-          type: "text",
-          placeholder: searchPlaceholder,
-          className: "video-search-input"
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "search-input-wrapper",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+            className: `dashicons dashicons-${searchIcon}`
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+            type: "text",
+            placeholder: searchPlaceholder,
+            className: "video-search-input"
+          })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
           className: "video-search-button",
           children: searchButtonText

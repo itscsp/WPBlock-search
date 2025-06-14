@@ -20,10 +20,6 @@
 			"type": "string",
 			"default": "Search"
 		},
-		"clearButtonText": {
-			"type": "string",
-			"default": "Clear"
-		},
 		"postTypes": {
 			"type": "array",
 			"default": ["post", "page"]

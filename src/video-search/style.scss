@@ -17,9 +17,23 @@
 		margin: 0 auto;
 	}
 
-	.video-search-input {
+	.search-input-wrapper {
 		flex: 1;
-		padding: 10px;
+		position: relative;
+		display: flex;
+		align-items: center;
+
+		.dashicons {
+			position: absolute;
+			left: 10px;
+			color: #666;
+		}
+	}
+
+	.video-search-input,
+	.modal-search-input {
+		flex: 1;
+		padding: 10px 10px 10px 35px;
 		border: 1px solid #ddd;
 		border-radius: 4px;
 		font-size: 16px;
@@ -30,7 +44,8 @@
 		}
 	}
 
-	.video-search-button {
+	.video-search-button,
+	.modal-search-button {
 		padding: 10px 20px;
 		background-color: #007cba;
 		color: white;
@@ -59,13 +74,25 @@
 	.video-search-modal-content {
 		position: relative;
 		background-color: #fff;
-		margin: 10% auto;
+		margin: 5% auto;
 		padding: 20px;
-		width: 80%;
+		width: 90%;
 		max-width: 800px;
 		border-radius: 8px;
-		max-height: 80vh;
+		max-height: 90vh;
 		overflow-y: auto;
+	}
+
+	.modal-search-container {
+		display: flex;
+		gap: 10px;
+		margin-bottom: 20px;
+		padding-bottom: 20px;
+		border-bottom: 1px solid #eee;
+		position: sticky;
+		top: 0;
+		background: #fff;
+		z-index: 1;
 	}
 
 	.video-search-modal-close {
@@ -76,6 +103,7 @@
 		font-weight: bold;
 		cursor: pointer;
 		color: #666;
+		z-index: 2;
 
 		&:hover {
 			color: #000;
@@ -83,15 +111,21 @@
 	}
 
 	.search-result-item {
-		padding: 15px;
+		padding: 20px;
 		border-bottom: 1px solid #eee;
+		transition: background-color 0.3s;
+
+		&:hover {
+			background-color: #f8f9fa;
+		}
 
 		&:last-child {
 			border-bottom: none;
 		}
 
 		h3 {
-			margin: 0 0 5px 0;
+			margin: 0 0 10px 0;
+			font-size: 1.2em;
 			
 			a {
 				color: #007cba;
@@ -103,10 +137,48 @@
 			}
 		}
 
-		p {
-			margin: 0;
-			color: #666;
-			font-size: 14px;
+		.search-result-content {
+			margin-bottom: 10px;
+			color: #444;
+			font-size: 0.95em;
+			line-height: 1.5;
+
+			p {
+				margin: 0 0 10px 0;
+			}
 		}
+
+		.search-result-meta {
+			display: flex;
+			gap: 15px;
+			font-size: 0.85em;
+			color: #666;
+
+			.post-type {
+				text-transform: capitalize;
+				background: #e9ecef;
+				padding: 2px 8px;
+				border-radius: 3px;
+			}
+
+			.post-date {
+				color: #666;
+			}
+		}
+	}
+
+	// Loading state
+	.searching {
+		text-align: center;
+		padding: 20px;
+		color: #666;
+	}
+
+	// No results state
+	.no-results {
+		text-align: center;
+		padding: 40px 20px;
+		color: #666;
+		font-style: italic;
 	}
 }
